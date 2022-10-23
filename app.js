@@ -3,6 +3,20 @@ const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const path = require('path');
 
+const catchAsync = require('./utils/catchAsync');
+const AppError = require('./utils/AppError');
+
+const mongoose = require('mongoose');
+const MongoDBStore = require('connect-mongo');
+const dbUrl = 'mongodb://localhost:27017/transcript';
+mongoose.connect(dbUrl);
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, "connection error:"));
+db.once('open', () => {
+    console.log("Database Connected!");
+})
+
 const app = express();
 
 app.engine('ejs', ejsMate);
@@ -28,4 +42,14 @@ app.get('/scripts', (req, res) => {
 
 app.get('/scripts/new', (req, res) => {
     res.render('scripts/new');
+})
+
+app.all('*', (req, res, next) => {
+    next(new AppError(404, "Page Not Found"));
+})
+
+app.use((err, req, res, next) => {
+    const { statusCode = 500 } = err;
+    if (!err.message) err.message = "Oops, something went wrong";
+    res.status(statusCode).render('error', { err });
 })
