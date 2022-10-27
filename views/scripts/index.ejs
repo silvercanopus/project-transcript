@@ -1,4 +1,7 @@
 <% layout('./layouts/boilerplate') %> 
 <h1>All Scripts</h1>
-<p>This is where the user can browse existing scripts.</p>
-<p>It should also be possible to browse scripts using filters such as language, length, difficulty, and so on.</p>
+<ul>
+    <% for (let script of scripts) { %>
+    <li><a href="/scripts/<%= script.id %>"><%= script.title %> </a></li>
+    <% } %>  
+</ul>

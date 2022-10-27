@@ -11,12 +11,14 @@ const catchAsync = require('./utils/catchAsync');
 const AppError = require('./utils/AppError');
 
 const userRoutes = require('./routes/users');
+const scriptRoutes = require('./routes/scripts');
+const translationRoutes = require('./routes/translations');
 
 const User = require('./models/user');
 
 const mongoose = require('mongoose');
 const MongoDBStore = require('connect-mongo');
-const dbUrl = 'mongodb://localhost:27017/transcript';
+const dbUrl = 'mongodb://localhost:27017/project-transcript';
 mongoose.connect(dbUrl);
 
 const db = mongoose.connection;
@@ -84,15 +86,11 @@ app.get('/', (req, res) => {
     res.render('home');
 })
 
-app.get('/scripts', (req, res) => {
-    res.render('scripts/index');
-})
-
-app.get('/scripts/new', (req, res) => {
-    res.render('scripts/new');
-})
-
 app.use('/', userRoutes);
+
+app.use('/', scriptRoutes);
+
+app.use('/', translationRoutes);
 
 app.all('*', (req, res, next) => {
     next(new AppError(404, "Page Not Found"));

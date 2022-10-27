@@ -1,0 +1,14 @@
+<% layout('./layouts/boilerplate') %> 
+<h1><%= translation.author.username %>'s Translation of <%= translation.script.title %></h1>
+<h2>Original Script:</h2>
+<div>
+    <% for (let line of translation.script.body.split("\n")) { %>
+        <p><%= line %></p>
+    <% } %>  
+</div>
+<h2>Translation:</h2>
+<div>
+    <% for (let line of translation.body.split("\n")) { %>
+        <p><%= line %></p>
+    <% } %>  
+</div>
