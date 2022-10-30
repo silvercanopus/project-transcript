@@ -1,0 +1,37 @@
+<% layout('./layouts/boilerplate') %> 
+<div class="row">
+    <h1 class="text-center">New Script</h1>
+    <div class="col-md-6 offset-md-3">
+        <form action="/scripts" method="POST" novalidate class="validated-form">
+            <div class="mb-3">
+                <label class="form-label" for="title">Title</label>
+                <input class="form-control" type="text" id="title" name="script[title]" required>
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="body">Script</label>
+                <textarea class="form-control" rows="8" id="body" name="script[body]" required></textarea>
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+            <div class="mb-3">
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="form-label">
+                        <input type="radio" id="language-en" name="script[language]" value="en"> English
+                    </label>
+                    <label class="form-label mx-3">
+                        <input type="radio" id="language-ja" name="script[language]" value="ja"> Japanese
+                    </label>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="description">Description</label>
+                <textarea class="form-control" rows="4" id="description" name="script[description]"></textarea>
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-primary">Add Script</button>
+                <a href="/scripts" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

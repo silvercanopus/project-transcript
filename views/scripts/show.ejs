@@ -6,8 +6,12 @@
     <% } %>  
 </div>
 <h2>Translations:</h2>
-<ul>
+<% if (script.translations.length > 0) { %> 
+    <ul>    
     <% for (let translation of script.translations) { %>
         <li><a href="/translations/<%= translation.id %>">Translation by <%= translation.author.username %></a></li>
     <% } %>  
-</ul>
+    </ul>
+<% } else { %>
+    <p>This script has no translation yet.</p>
+<% } %>  

@@ -1,8 +1,20 @@
 const Script = require('../models/script');
 
-module.exports.index = async(req, res, next) => {
+module.exports.index = async (req, res, next) => {
     const scripts = await Script.find({});
     res.render('scripts/index', { scripts });
+}
+
+module.exports.renderNewScriptForm = async (req, res, next) => {
+    res.render('scripts/new');
+}
+
+module.exports.createScript = async (req, res, next) => {
+    const script = new Script(req.body.script);
+    script.author = req.user._id;
+    await script.save();
+    req.flash('success', "Successfully made a new script");
+    res.redirect(`/scripts/${script._id}`);
 }
 
 module.exports.showScript = async (req, res, next) => {

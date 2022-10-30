@@ -1,7 +1,14 @@
 <% layout('./layouts/boilerplate') %> 
 <h1>All Scripts</h1>
-<ul>
-    <% for (let script of scripts) { %>
-    <li><a href="/scripts/<%= script.id %>"><%= script.title %> </a></li>
+<div>
+    <ul>
+        <% for (let script of scripts) { %>
+        <li><a href="/scripts/<%= script.id %>"><%= script.title %> </a></li>
+        <% } %>  
+    </ul>
+</div>
+<div>
+    <% if (currentUser) { %>
+    <a href="/scripts/new">Create New</a>
     <% } %>  
-</ul>
+</div>
