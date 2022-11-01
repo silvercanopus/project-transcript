@@ -30,3 +30,9 @@ module.exports.showScript = async (req, res, next) => {
     }
     res.render('scripts/show', { script });
 }
+
+module.exports.deleteScript = async (req, res, next) => {
+    await Script.findByIdAndDelete(req.params.id);
+    req.flash('success', "Successfully deleted script.");
+    res.redirect('/scripts');
+}

@@ -1,11 +1,19 @@
 <% layout('./layouts/boilerplate') %> 
+
 <h1><%= script.title %></h1>
 <div>
     <% for (let line of script.body.split("\n")) { %>
         <p><%= line %></p>
     <% } %>  
 </div>
-<h2>Translations:</h2>
+
+<% if (currentUser && script.author.equals(currentUser._id)) { %> 
+<form action="/scripts/<%= script._id %>?_method=DELETE" method="POST">
+    <button class="btn btn-danger">Delete</button>
+</form>
+<% } %>
+
+<h2>Translations:</h2> 
 <% if (script.translations.length > 0) { %> 
     <ul>    
     <% for (let translation of script.translations) { %>

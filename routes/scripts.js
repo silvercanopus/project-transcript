@@ -1,7 +1,7 @@
 const express = require('express');
 const scripts = require('../controllers/scripts');
 const catchAsync = require('../utils/catchAsync');
-const { validateScript, isLoggedIn } = require('../utils/middleware');
+const { validateScript, isLoggedIn, isScriptAuthor } = require('../utils/middleware');
 
 const router = express.Router();
 
@@ -13,6 +13,7 @@ router.route('/scripts/new')
     .get(isLoggedIn, catchAsync(scripts.renderNewScriptForm));
 
 router.route('/scripts/:id')
-    .get(catchAsync(scripts.showScript));
+    .get(catchAsync(scripts.showScript))
+    .delete(isLoggedIn, isScriptAuthor, catchAsync(scripts.deleteScript));
 
 module.exports = router;
