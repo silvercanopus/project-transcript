@@ -8,3 +8,10 @@ module.exports.scriptSchema = Joi.object({
         description: Joi.string()
     }).required()
 })
+
+module.exports.translationSchema = Joi.object({
+    translation: Joi.object({
+        body: Joi.string().required(),
+        language: Joi.string().valid('en', 'ja').required()
+    }).required()
+})

@@ -36,3 +36,12 @@ module.exports.deleteScript = async (req, res, next) => {
     req.flash('success', "Successfully deleted script.");
     res.redirect('/scripts');
 }
+
+module.exports.renderTranslateForm = async (req, res, next) => {
+    const script = await Script.findById(req.params.id);
+    if (!script) {
+        req.flash('error', "Cannot find that script!");
+        return res.redirect('/');
+    }
+    res.render('scripts/translate', { script });
+}

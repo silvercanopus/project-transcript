@@ -16,4 +16,7 @@ router.route('/scripts/:id')
     .get(catchAsync(scripts.showScript))
     .delete(isLoggedIn, isScriptAuthor, catchAsync(scripts.deleteScript));
 
+router.route('/scripts/:id/translate')
+    .get(catchAsync(scripts.renderTranslateForm));
+
 module.exports = router;

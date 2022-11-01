@@ -1,25 +1,33 @@
 <% layout('./layouts/boilerplate') %> 
 
-<h1><%= script.title %></h1>
-<div>
-    <% for (let line of script.body.split("\n")) { %>
-        <p><%= line %></p>
-    <% } %>  
+<div class="row">
+    <h1><%= script.title %></h1>
+    <div>
+        <% for (let line of script.body.split("\n")) { %>
+            <p><%= line %></p>
+        <% } %>  
+    </div>
+
+    <% if (currentUser && script.author.equals(currentUser._id)) { %> 
+    <form action="/scripts/<%= script._id %>?_method=DELETE" method="POST">
+        <button class="btn btn-danger">Delete</button>
+    </form>
+    <% } %>
 </div>
 
-<% if (currentUser && script.author.equals(currentUser._id)) { %> 
-<form action="/scripts/<%= script._id %>?_method=DELETE" method="POST">
-    <button class="btn btn-danger">Delete</button>
-</form>
-<% } %>
-
-<h2>Translations:</h2> 
-<% if (script.translations.length > 0) { %> 
-    <ul>    
-    <% for (let translation of script.translations) { %>
-        <li><a href="/translations/<%= translation.id %>">Translation by <%= translation.author.username %></a></li>
+<div class="row mt-3">
+    <h2>Translations:</h2> 
+    <% if (script.translations.length > 0) { %> 
+        <ul class="list-group">    
+        <% for (let translation of script.translations) { %>
+            <a href="/translations/<%= translation.id %>" class="list-group-item list-group-item-action">Translation by <%= translation.author.username %></a>
+        <% } %>  
+        </ul>
+    <% } else { %>
+        <p>This script has no translation yet.</p>
     <% } %>  
-    </ul>
-<% } else { %>
-    <p>This script has no translation yet.</p>
-<% } %>  
+
+    <form action="/scripts/<%= script._id %>/translate">
+        <button class="btn btn-primary mt-2">Translate This Script</button>
+    </form>
+</div>
