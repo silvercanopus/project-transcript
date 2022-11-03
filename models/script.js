@@ -17,6 +17,12 @@ const ScriptSchema = new Schema({
         required: true
     },
     description: String,
+    likes: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ],
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User'

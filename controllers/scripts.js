@@ -45,3 +45,17 @@ module.exports.renderTranslateForm = async (req, res, next) => {
     }
     res.render('scripts/translate', { script });
 }
+
+module.exports.toggleLike = async (req, res, next) => {
+    const id = req.params.id;
+    const user = req.query.user;
+    const script = await Script.findById(id);
+    if (script.likes.includes(user)) {
+        script.likes = script.likes.filter(u => u != user)
+    }
+    else {
+        script.likes.push(user);
+    }
+    await script.save();
+    res.redirect(`/scripts/${id}`);
+}

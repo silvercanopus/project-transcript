@@ -17,6 +17,9 @@ router.route('/scripts/:id')
     .delete(isLoggedIn, isScriptAuthor, catchAsync(scripts.deleteScript));
 
 router.route('/scripts/:id/translate')
-    .get(catchAsync(scripts.renderTranslateForm));
+    .get(isLoggedIn, catchAsync(scripts.renderTranslateForm));
+
+router.route('/scripts/:id/like')
+    .put(isLoggedIn, catchAsync(scripts.toggleLike));
 
 module.exports = router;

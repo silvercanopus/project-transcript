@@ -7,12 +7,31 @@
             <p><%= line %></p>
         <% } %>  
     </div>
+</div>
 
-    <% if (currentUser && script.author.equals(currentUser._id)) { %> 
-    <form action="/scripts/<%= script._id %>?_method=DELETE" method="POST">
-        <button class="btn btn-danger">Delete</button>
-    </form>
-    <% } %>
+<div class="row">
+    <span class="col-sm-2">
+        <form action="/scripts/<%= script._id %>/like?_method=PUT&user=<%= currentUser._id %>" method="POST">
+            <button class="btn btn-primary like-btn my-1">
+                <% if (script.likes.includes(currentUser._id)) { %> 
+                    <i class="fa-solid fa-heart"></i>
+                <% } else { %>
+                    <i class="fa-regular fa-heart"></i>
+                <% } %> 
+                <%= script.likes.length %>
+            </button>
+        </form>
+    </span>
+    <span class="col-sm-2">
+        <% if (currentUser && script.author.equals(currentUser._id)) { %> 
+        <form action="/scripts/<%= script._id %>?_method=DELETE" method="POST">
+            <button class="btn btn-danger my-1">
+                <i class="fa-solid fa-trash"></i>
+                Delete
+            </button>
+        </form>
+        <% } %>
+    </span>
 </div>
 
 <div class="row mt-3">
