@@ -15,3 +15,9 @@ module.exports.translationSchema = Joi.object({
         language: Joi.string().valid('en', 'ja').required()
     }).required()
 })
+
+module.exports.commentSchema = Joi.object({
+    comment: Joi.object({
+        body: Joi.string().required()
+    }).required()
+})

@@ -18,12 +18,20 @@ module.exports.createScript = async (req, res, next) => {
 }
 
 module.exports.showScript = async (req, res, next) => {
-    const script = await Script.findById(req.params.id).populate('author').populate({
-        path: 'translations',
-        populate: {
-            path: 'author'
-        }
-    });
+    const script = await Script.findById(req.params.id)
+        .populate('author')
+        .populate({
+            path: 'translations',
+            populate: {
+                path: 'author'
+            }
+        })
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'author'
+            }
+        });
     if (!script) {
         req.flash('error', "Cannot find that script!");
         return res.redirect('/');

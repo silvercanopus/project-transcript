@@ -50,3 +50,34 @@
         <button class="btn btn-primary mt-2">Translate This Script</button>
     </form>
 </div>
+
+<div class="row my-3">
+    <h2>Comments:</h2> 
+    <% if (script.comments.length > 0) { %> 
+        <ul class="list-group mb-2">    
+        <% for (let comment of script.comments) { %>
+            <li class="list-group-item">
+                <div><b>Comment by <%= comment.author.username %></b></div>
+                <div><%= comment.body %></div>
+                <% if (currentUser && comment.author.equals(currentUser._id)) { %> 
+                <form action="/scripts/<%= script._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger my-1">Delete</button>
+                </form>
+                <% } %>
+            </li>
+        <% } %>  
+        </ul>
+    <% } else { %>
+        <p>This script has no comment yet.</p>
+    <% } %>  
+    
+    <% if (currentUser) { %>
+        <h3>Add a comment</h3>
+        <form class="validated-form" action="/scripts/<%= script._id %>/comments" method="POST" novalidate>
+            <div class="mb-2">
+                <textarea class="form-control" name="comment[body]" id="commentbody" cols="30" rows="4"></textarea>
+            </div>
+            <button class="btn btn-primary">Submit</button>
+        </form>
+    <% } %>  
+</div>
