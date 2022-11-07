@@ -17,6 +17,12 @@ const translationSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Script'
     },
+    feedback: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Feedback'
+        }
+    ],
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User'

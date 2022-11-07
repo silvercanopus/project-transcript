@@ -1,0 +1,29 @@
+<% layout('./layouts/boilerplate') %> 
+<h1><%= feedback.author.username %>'s Feedback for <%= feedback.translation.author.username %>'s Translation of <%= feedback.translation.script.title %></h1>
+
+<div class="row py-2">
+    <div class="col-md-6">
+        <h2>Original Script:</h2>
+        <div>
+            <% for (let line of feedback.translation.script.body) { %>
+                <div class="line"><%= line %></div>
+            <% } %>  
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h2>Translation + Feedback:</h2>
+        <div>
+            <% for (let [i, line] of feedback.translation.body.entries()) { %>
+                <div class="line mark-<%=feedback.marks[i]%>"><%= line %></div>
+                <% if (feedback.comments[i]) { %>
+                    <div class="feedback-comment">Feedback: <%= feedback.comments[i] %></div>
+                <% } %>  
+            <% } %>  
+        </div>
+    </div>
+    <% if (currentUser && feedback.author.equals(currentUser._id)) { %> 
+    <form action="/feedback/<%= feedback._id %>?_method=DELETE" method="POST">
+        <button class="btn btn-danger">Delete this feedback</button>
+    </form>
+    <% } %>         
+</div>

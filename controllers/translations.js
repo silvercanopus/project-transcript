@@ -7,6 +7,11 @@ module.exports.showTranslation = async (req, res, next) => {
         populate: {
             path: 'author'
         }
+    }).populate({
+        path: 'feedback',
+        populate: {
+            path: 'author'
+        }
     });
     if (!translation) {
         req.flash('error', "Cannot find that translation!");
@@ -37,4 +42,18 @@ module.exports.deleteTranslation = async (req, res, next) => {
     await Translation.findByIdAndDelete(req.params.id);
     req.flash('success', "Successfully deleted translation.");
     res.redirect('/scripts');
+}
+
+module.exports.renderNewFeedbackForm = async (req, res, next) => {
+    const translation = await Translation.findById(req.params.id).populate('author').populate({
+        path: 'script',
+        populate: {
+            path: 'author'
+        }
+    });
+    if (!translation) {
+        req.flash('error', "Cannot find that translation!");
+        return res.redirect('/');
+    }
+    res.render('feedback/new', { translation });
 }

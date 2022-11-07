@@ -22,6 +22,24 @@
 
 <% if (currentUser && translation.author.equals(currentUser._id)) { %> 
 <form action="/translations/<%= translation._id %>?_method=DELETE" method="POST">
-    <button class="btn btn-danger">Delete</button>
+    <button class="btn btn-danger">Delete this translation</button>
 </form>
-<% } %>
+<% } else if (currentUser) { %>
+<form action="/translations/<%= translation._id %>/feedback" method="GET">
+    <button class="btn btn-primary">Give feedback</button>
+</form>
+<% } %> 
+
+<div class="row py-2">
+    <h2>List of Feedback</h2>
+    <% if (translation.feedback.length > 0) { %> 
+        <ul class="list-group">    
+        <% for (let feedback of translation.feedback) { %>
+            <a href="/feedback/<%= feedback.id %>" class="list-group-item list-group-item-action">Feedback from <%= feedback.author.username %></a>
+        <% } %>  
+        </ul>
+    <% } else { %>
+        <p>This translation has no feedback yet.</p>
+    <% } %>  
+</div>
+

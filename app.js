@@ -17,6 +17,7 @@ const userRoutes = require('./routes/users');
 const scriptRoutes = require('./routes/scripts');
 const translationRoutes = require('./routes/translations');
 const commentRoutes = require('./routes/comments');
+const feedbackRoutes = require('./routes/feedback');
 
 // Import the User DB (required to enable authentication)
 const User = require('./models/user');
@@ -102,6 +103,7 @@ app.use('/', userRoutes);
 app.use('/', scriptRoutes);
 app.use('/', translationRoutes);
 app.use('/', commentRoutes);
+app.use('/', feedbackRoutes);
 
 // For catching all undefined routes
 app.all('*', (req, res, next) => {

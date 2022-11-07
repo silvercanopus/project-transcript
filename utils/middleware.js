@@ -3,6 +3,7 @@ const { scriptSchema, translationSchema, commentSchema } = require('./schemas');
 const Script = require('../models/script');
 const Translation = require('../models/translation');
 const Comment = require('../models/comment');
+const Feedback = require('../models/feedback');
 
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
@@ -56,6 +57,19 @@ module.exports.isTranslationAuthor = async (req, res, next) => {
     }
 }
 
+module.exports.isNotTranslationAuthor = async (req, res, next) => {
+    const { id } = req.params;
+    const translation = await Translation.findById(id);
+    if (req.user && !translation.author.equals(req.user._id)) {
+        // a user needs to be logged in and that user needs to not be the translation's author
+        next();
+    }
+    else {
+        req.flash('error', "You don't have permission to perform this operation!");
+        res.redirect(`/translations/${id}`);
+    }
+}
+
 module.exports.validateComment = (req, res, next) => {
     const { error } = commentSchema.validate(req.body);
     if (error) {
@@ -75,5 +89,18 @@ module.exports.isCommentAuthor = async (req, res, next) => {
     else {
         req.flash('error', "You don't have permission to perform this operation!");
         res.redirect(`/scripts/${id}`);
+    }
+}
+
+module.exports.isFeedbackAuthor = async (req, res, next) => {
+    const { id } = req.params;
+    const feedback = await Feedback.findById(id);
+    if (req.user && feedback.author.equals(req.user._id)) {
+        // a user needs to be logged in and that user needs to be the feedback's author
+        next();
+    }
+    else {
+        req.flash('error', "You don't have permission to perform this operation!");
+        res.redirect(`/feedback/${id}`);
     }
 }

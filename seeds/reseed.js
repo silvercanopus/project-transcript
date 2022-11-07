@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
+const User = require('../models/user');
 const Script = require('../models/script');
 const Translation = require('../models/translation');
-const User = require('../models/user');
+const Comment = require('../models/comment');
+const Feedback = require('../models/feedback');
 
 // re-seeding should be done locally
 mongoose.connect('mongodb://localhost:27017/project-transcript');
@@ -13,8 +15,10 @@ db.once('open', () => {
 
 const resetDB = async () => {
     await User.deleteMany({});
-    await Translation.deleteMany({});
     await Script.deleteMany({});
+    await Translation.deleteMany({});
+    await Comment.deleteMany({});
+    await Feedback.deleteMany({});
 }
 
 const reseedDB = async () => {
