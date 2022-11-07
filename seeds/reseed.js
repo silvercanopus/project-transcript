@@ -18,7 +18,7 @@ const resetDB = async () => {
 }
 
 const reseedDB = async () => {
-    resetDB();
+    await resetDB();
 
     // Generate two users
     const user1 = new User({ username: "first", email: "first@transcript.com" });
@@ -32,13 +32,13 @@ const reseedDB = async () => {
     
     const script1 = new Script({
         title: "Sample Script 1",
-        body: sample[0].lines.join('\n'),
+        body: sample[0].lines,
         language: sample[0].language,
         description: "First sample script",
         author: firstUser._id
     })
     const translation1 = new Translation({
-        body: sample[1].lines.join('\n'),
+        body: sample[1].lines,
         language: sample[1].language,
         script: script1._id,
         author: secondUser._id
@@ -49,13 +49,13 @@ const reseedDB = async () => {
 
     const script2 = new Script({
         title: "Sample Script 2",
-        body: sample[3].lines.join('\n'),
+        body: sample[3].lines,
         language: sample[3].language,
         description: "Second sample script",
         author: secondUser._id
     })
     const translation2 = new Translation({
-        body: sample[2].lines.join('\n'),
+        body: sample[2].lines,
         language: sample[2].language,
         script: script2._id,
         author: firstUser._id

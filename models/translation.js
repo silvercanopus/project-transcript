@@ -2,10 +2,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const translationSchema = new Schema({
-    body: {
-        type: String,
-        required: true
-    },
+    body: [
+        {
+            type: String,
+            required: true
+        }
+    ],
     language: {
         type: String,
         enum: ['en', 'ja'],

@@ -3,8 +3,8 @@
 <div class="row">
     <h1><%= script.title %></h1>
     <div>
-        <% for (let line of script.body.split("\n")) { %>
-            <p><%= line %></p>
+        <% for (let line of script.body) { %>
+            <div class="line"><%= line %></div>
         <% } %>  
     </div>
 </div>
@@ -57,8 +57,8 @@
         <ul class="list-group mb-2">    
         <% for (let comment of script.comments) { %>
             <li class="list-group-item">
-                <div><b>Comment by <%= comment.author.username %></b></div>
-                <div><%= comment.body %></div>
+                <div class="comment-title">Comment by <%= comment.author.username %></div>
+                <div class="comment-body"><%= comment.body %></div>
                 <% if (currentUser && comment.author.equals(currentUser._id)) { %> 
                 <form action="/scripts/<%= script._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
                     <button class="btn btn-danger my-1">Delete</button>

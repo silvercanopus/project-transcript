@@ -4,8 +4,8 @@
     <div class="col-md-6">
         <h2>Original Script:</h2>
         <div>
-            <% for (let line of script.body.split("\n")) { %>
-                <p><%= line %></p>
+            <% for (let line of script.body) { %>
+                <div class="line"><%= line %></div>
             <% } %>  
         </div>
     </div>
@@ -13,7 +13,7 @@
         <h2>Your Translation:</h2>
         <form action="/scripts/<%= script._id %>/translate" method="POST" novalidate class="validated-form">
             <div class="mb-3">
-                <textarea class="form-control" rows="8" id="body" name="translation[body]" required></textarea>
+                <textarea class="form-control" rows="8" id="body" name="body" required></textarea>
                 <div class="valid-feedback">Looks good!</div>
             </div>
             <div class="mb-3">

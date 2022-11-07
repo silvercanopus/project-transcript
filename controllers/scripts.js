@@ -11,6 +11,12 @@ module.exports.renderNewScriptForm = async (req, res, next) => {
 
 module.exports.createScript = async (req, res, next) => {
     const script = new Script(req.body.script);
+    const lines = req.body.body.split('\n');
+    for (let line of lines) {
+        if (line.length > 0) {
+            script.body.push(line);
+        }
+    }
     script.author = req.user._id;
     await script.save();
     req.flash('success', "Successfully made a new script");

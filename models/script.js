@@ -6,10 +6,12 @@ const ScriptSchema = new Schema({
         type: String,
         required: true
     },
-    body: {
-        type: String,
-        required: true
-    },
+    body: [
+        {
+            type: String,
+            required: true
+        }
+    ],
     language: {
         type: String,
         enum: ['en', 'ja'],

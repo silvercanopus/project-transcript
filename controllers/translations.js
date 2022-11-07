@@ -18,6 +18,12 @@ module.exports.showTranslation = async (req, res, next) => {
 module.exports.createTranslation = async (req, res, next) => {
     const script = await Script.findById(req.params.id);
     const translation = new Translation(req.body.translation);
+    const lines = req.body.body.split('\n');
+    for (let line of lines) {
+        if (line.length > 0) {
+            translation.body.push(line);
+        }
+    }
     translation.author = req.user._id;
     translation.script = req.params.id;
     script.translations.push(translation);
