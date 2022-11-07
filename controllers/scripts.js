@@ -57,7 +57,7 @@ module.exports.renderTranslateForm = async (req, res, next) => {
         req.flash('error', "Cannot find that script!");
         return res.redirect('/');
     }
-    res.render('scripts/translate', { script });
+    res.render('translations/new', { script });
 }
 
 module.exports.toggleLike = async (req, res, next) => {
