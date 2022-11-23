@@ -1,0 +1,29 @@
+<% layout('./layouts/boilerplate') %> 
+
+<h1><%= user.username %>'s Profile</h1>
+
+<div class="row mt-3">
+    <h2>Scripts made by this user</h2> 
+    <% if (user.scripts.length > 0) { %> 
+        <ul class="list-group">    
+        <% for (let script of user.scripts) { %>
+            <a href="/scripts/<%= script.id %>" class="list-group-item list-group-item-action"><%= script.title %></a>
+        <% } %>  
+        </ul>
+    <% } else { %>
+        <p>This user has not made any scripts yet</p>
+    <% } %>  
+</div>
+
+<div class="row mt-3">
+    <h2>Translations made by this user</h2> 
+    <% if (user.translations.length > 0) { %> 
+        <ul class="list-group">    
+        <% for (let translation of user.translations) { %>
+            <a href="/translations/<%= translation.id %>" class="list-group-item list-group-item-action">Translation for <%= translation.script.title %></a>
+        <% } %>  
+        </ul>
+    <% } else { %>
+        <p>This user has not made any translations yet.</p>
+    <% } %>
+</div>

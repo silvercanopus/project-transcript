@@ -44,3 +44,19 @@ module.exports.logout = (req, res, next) => {
         }
     })
 }
+
+module.exports.showUser = async (req, res, next) => {
+    const user = await User.findById(req.params.id)
+        .populate('scripts')
+        .populate({
+            path: 'translations',
+            populate: {
+                path: 'script'
+            }
+        });
+    if (!user) {
+        req.flash('error', "Cannot find that user!");
+        return res.redirect('/');
+    }
+    res.render('users/show', { user });
+}
