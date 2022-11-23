@@ -21,9 +21,7 @@ const resetDB = async () => {
     await Feedback.deleteMany({});
 }
 
-const reseedDB = async () => {
-    await resetDB();
-
+const generateSmallSamples = async () => {
     // Generate two users
     const user1 = new User({ username: "first", email: "first@transcript.com" });
     const firstUser = await User.register(user1, "1");
@@ -74,6 +72,37 @@ const reseedDB = async () => {
     await translation2.save();
     await user1.save();
     await user2.save();
+}
+
+const generateBSDSamples = async () => {
+    const newUser = new User({ username: "Scripter", email: "scripter@transcript.com" });
+    const scripter = await User.register(newUser, "1234");
+
+    const bsdCorpus = require("./bsd_corpus_train.json");
+    for (let scenario of bsdCorpus) {
+        const lines = [];
+        for (let conv of scenario.conversation) {
+            const speaker = scenario.original_language === "en" ? conv.en_speaker : conv.ja_speaker;
+            const sentence = scenario.original_language === "en" ? conv.en_sentence : conv.ja_sentence;
+            lines.push(speaker + ": " + sentence);
+        }
+        
+        const script = new Script({
+            title: scenario.title,
+            language: scenario.original_language,
+            author: scripter._id,
+            body: lines
+        })
+        scripter.scripts.push(script);
+        await script.save();
+        await scripter.save();
+    }
+}
+
+const reseedDB = async () => {
+    await resetDB();
+    await generateSmallSamples();
+    await generateBSDSamples();
 }
 
 reseedDB().then(() => {
