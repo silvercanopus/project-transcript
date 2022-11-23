@@ -48,8 +48,8 @@ const reseedDB = async () => {
         author: secondUser._id
     })
     script1.translations.push(translation1);
-    await translation1.save();
-    await script1.save();
+    user1.scripts.push(script1);
+    user2.translations.push(translation1);
 
     const script2 = new Script({
         title: "Sample Script 2",
@@ -65,8 +65,15 @@ const reseedDB = async () => {
         author: firstUser._id
     })
     script2.translations.push(translation2);
-    await translation2.save();
+    user1.translations.push(translation2);
+    user2.scripts.push(script2);
+
+    await script1.save();
     await script2.save();
+    await translation1.save();
+    await translation2.save();
+    await user1.save();
+    await user2.save();
 }
 
 reseedDB().then(() => {

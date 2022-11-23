@@ -7,7 +7,19 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         unique: true
-    }
+    },
+    scripts: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Script'
+        }
+    ],
+    translations: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Translation'
+        }
+    ]
 })
 
 UserSchema.plugin(passportLocalMongoose);

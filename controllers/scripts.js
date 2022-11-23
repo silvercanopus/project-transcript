@@ -1,4 +1,5 @@
 const Script = require('../models/script');
+const User = require('../models/user');
 
 module.exports.index = async (req, res, next) => {
     const scripts = await Script.find({});
@@ -10,6 +11,7 @@ module.exports.renderNewScriptForm = async (req, res, next) => {
 }
 
 module.exports.createScript = async (req, res, next) => {
+    const currentUser = await User.findById(req.user._id);
     const script = new Script(req.body.script);
     const lines = req.body.body.split('\n');
     for (let line of lines) {
@@ -18,7 +20,9 @@ module.exports.createScript = async (req, res, next) => {
         }
     }
     script.author = req.user._id;
+    currentUser.scripts.push(script);
     await script.save();
+    await currentUser.save();
     req.flash('success', "Successfully made a new script");
     res.redirect(`/scripts/${script._id}`);
 }
