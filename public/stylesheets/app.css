@@ -3,6 +3,15 @@
     margin-bottom: 0.5rem;
 }
 
+.script-title {
+    font-size: large;
+}
+
+.script-info {
+    font-size: small;
+    margin-right: 1em;
+}
+
 .comment-title {
     font-weight: bold;
 }

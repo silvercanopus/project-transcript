@@ -1,14 +1,27 @@
 <% layout('./layouts/boilerplate') %> 
 <h1>All Scripts</h1>
-<div>
-    <ul>
+<div class="my-3">
+    <% if (currentUser) { %>
+    <a href="/scripts/new" class="btn btn-primary">Create New</a>
+    <% } %>  
+</div>
+<div class="my-3">
+    <ul class="list-group">
         <% for (let script of scripts) { %>
-        <li><a href="/scripts/<%= script.id %>"><%= script.title %> </a></li>
+        <div class="list-group-item list-group-item-action">
+            <div class="script-title">
+                <a href="/scripts/<%= script.id %>"><%= script.title %></a>
+            </div>
+            <span class="script-info">
+                Language: <%= script.language %>
+            </span>
+            <span class="script-info">
+                Length: <%= script.length %>
+            </span>
+            <span class="script-info">
+                Author: <a href="/users/<%= script.author.id %>"><%= script.author.username %></a>
+            </span>
+        </div>
         <% } %>  
     </ul>
-</div>
-<div>
-    <% if (currentUser) { %>
-    <a href="/scripts/new">Create New</a>
-    <% } %>  
 </div>
