@@ -35,6 +35,7 @@ const generateSmallSamples = async () => {
     const script1 = new Script({
         title: "Sample Script 1",
         body: sample[0].lines,
+        length: sample[0].lines.reduce((total, line) => total + line.length, 0),
         language: sample[0].language,
         description: "First sample script",
         author: firstUser._id
@@ -52,6 +53,7 @@ const generateSmallSamples = async () => {
     const script2 = new Script({
         title: "Sample Script 2",
         body: sample[3].lines,
+        length: sample[3].lines.reduce((total, line) => total + line.length, 0),
         language: sample[3].language,
         description: "Second sample script",
         author: secondUser._id
@@ -91,7 +93,8 @@ const generateBSDSamples = async () => {
             title: scenario.title,
             language: scenario.original_language,
             author: scripter._id,
-            body: lines
+            body: lines,
+            length: lines.reduce((total, line) => total + line.length, 0),
         })
         scripter.scripts.push(script);
         await script.save();

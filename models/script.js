@@ -12,6 +12,10 @@ const ScriptSchema = new Schema({
             required: true
         }
     ],
+    length: {
+        type: Number,
+        required: true
+    },
     language: {
         type: String,
         enum: ['en', 'ja'],

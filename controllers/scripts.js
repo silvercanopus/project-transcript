@@ -2,7 +2,7 @@ const Script = require('../models/script');
 const User = require('../models/user');
 
 module.exports.index = async (req, res, next) => {
-    const scripts = await Script.find({});
+    const scripts = await Script.find({}).populate('author');
     res.render('scripts/index', { scripts });
 }
 
@@ -14,9 +14,11 @@ module.exports.createScript = async (req, res, next) => {
     const currentUser = await User.findById(req.user._id);
     const script = new Script(req.body.script);
     const lines = req.body.body.split('\n');
+    script.length = 0;
     for (let line of lines) {
         if (line.length > 0) {
             script.body.push(line);
+            script.length += line.length;
         }
     }
     script.author = req.user._id;
