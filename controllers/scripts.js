@@ -2,7 +2,19 @@ const Script = require('../models/script');
 const User = require('../models/user');
 
 module.exports.index = async (req, res, next) => {
-    const scripts = await Script.find({}).populate('author');
+    const queries = [];
+    if (req.query) {
+        if (req.query.title) {
+            queries.push({title: {$regex: ".*(?i)" + req.query.title + ".*"}})
+        }
+        if (req.query.language && req.query.language !== "all") {
+            queries.push({language: req.query.language});
+        }
+        if (req.query.maxlength && req.query.maxlength > 0) {
+            queries.push({length: {$lte: parseInt(req.query.maxlength)}})
+        }
+    }
+    const scripts = await Script.find(...queries).populate('author');
     res.render('scripts/index', { scripts });
 }
 

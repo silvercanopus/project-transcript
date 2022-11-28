@@ -5,6 +5,27 @@
     <a href="/scripts/new" class="btn btn-primary">Create New</a>
     <% } %>  
 </div>
+<div class="script-filter-box my-3">
+    <form action="/scripts">
+        <div class="mb-3">
+            <label class="form-label" for="search-title">Title Search</label>
+            <input class="form-control" type="search" name="title" id="search-title" placeholder="Search for title">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="search-language">Language</label>
+            <select class="form-select" name="language" id="search-language">
+                <option value="all">All</option>
+                <option value="en">English</option>
+                <option value="ja">Japanese</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="search-maxlength">Maximum Length</label>
+            <input class="form-control" type="number" name="maxlength" id="search-maxlength" placeholder="0">
+        </div>
+        <button class="btn btn-primary">Search</button>
+    </form>
+</div>
 <div class="my-3">
     <ul class="list-group">
         <% for (let script of scripts) { %>
