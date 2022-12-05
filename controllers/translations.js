@@ -1,7 +1,6 @@
 const Translation = require('../models/translation');
 const Script = require('../models/script');
 const User = require('../models/user');
-const user = require('../models/user');
 
 module.exports.showTranslation = async (req, res, next) => {
     const translation = await Translation.findById(req.params.id).populate('author').populate({
@@ -24,7 +23,7 @@ module.exports.showTranslation = async (req, res, next) => {
 
 module.exports.createTranslation = async (req, res, next) => {
     const script = await Script.findById(req.params.id);
-    const currentUser = await Script.findById(req.user._id);
+    const currentUser = await User.findById(req.user._id);
     const translation = new Translation(req.body.translation);
     const lines = req.body.body.split('\n');
     for (let line of lines) {
